@@ -1,0 +1,31 @@
+package com.example.controledeacesso.controller;
+
+import com.example.controledeacesso.dto.PessoaDTO;
+import com.example.controledeacesso.entity.Pessoa;
+import com.example.controledeacesso.service.PessoaService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.util.Base64;
+
+@RestController
+@RequestMapping
+@RequiredArgsConstructor
+public class PessoaController {
+
+    private final PessoaService pessoaService;
+
+    @PostMapping("/cadastro")
+    public ResponseEntity<String> cadastroPessoa(
+            @ModelAttribute PessoaDTO data
+    ) throws IOException {
+
+        pessoaService.cadastroPessoa(data);
+
+        return ResponseEntity.ok(
+                "Acesso de " + data.getNome() + " registrado!"
+        );
+    }
+}
