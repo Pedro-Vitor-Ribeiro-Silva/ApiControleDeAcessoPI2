@@ -23,8 +23,8 @@ public class LogService {
         return logRepository.findById(id).orElse(null);
     }
 
-    public List<Log> buscarLogsDeUmaPessoaPorId(String id){
-        return logRepository.findByPessoaId(id);
+    public List<Log> buscarLogsDeUmaPessoaPorCpf(String cpf) {
+        return logRepository.findByPessoaCpf(cpf);
     }
 
 
