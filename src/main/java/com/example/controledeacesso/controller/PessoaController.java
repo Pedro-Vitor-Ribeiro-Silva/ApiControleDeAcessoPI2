@@ -34,4 +34,10 @@ public class PessoaController {
                 "Acesso de " + data.getNome() + " registrado!"
         );
     }
+
+    @PutMapping("/atualizar")
+    public ResponseEntity<String> atualizarPessoa(@ModelAttribute PessoaDTO data) {
+        pessoaService.atualizarPessoa(data.getCpf(), data.getNome(), data.getFoto());
+        return ResponseEntity.ok("Informações de Acesso atualizado com sucesso!");
+    }
 }
