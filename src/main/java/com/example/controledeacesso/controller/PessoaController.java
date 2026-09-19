@@ -12,7 +12,7 @@ import java.util.Base64;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/pessoa")
 @RequiredArgsConstructor
 public class PessoaController {
 
