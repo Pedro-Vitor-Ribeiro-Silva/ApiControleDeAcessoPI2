@@ -41,8 +41,8 @@ public class PessoaController {
         return ResponseEntity.ok("Informações de Acesso atualizado com sucesso!");
     }
 
-    @DeleteMapping("/deletar")
-    public ResponseEntity<String> deletarPessoa(@RequestBody String cpf) {
+    @DeleteMapping("/{cpf}")
+    public ResponseEntity<String> deletarPessoa(@PathVariable String cpf) {
         pessoaService.deletarPessoa(cpf);
         return ResponseEntity.ok("Acesso deletado com sucesso!");
     }
