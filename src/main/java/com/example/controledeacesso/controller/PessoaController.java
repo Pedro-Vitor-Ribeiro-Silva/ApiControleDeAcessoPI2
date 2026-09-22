@@ -23,6 +23,12 @@ public class PessoaController {
         return pessoaService.listarPessoas();
     }
 
+    @GetMapping("/{cpf}")
+    public ResponseEntity<Pessoa> buscarPessoa(@PathVariable String cpf) {
+        Pessoa pessoa = pessoaService.buscarPessoaPorCpf(cpf);
+        return pessoa != null ? ResponseEntity.ok(pessoa) : ResponseEntity.notFound().build();
+    }
+
     @PostMapping("/cadastro")
     public ResponseEntity<String> cadastroPessoa(
             @ModelAttribute PessoaDTO data
