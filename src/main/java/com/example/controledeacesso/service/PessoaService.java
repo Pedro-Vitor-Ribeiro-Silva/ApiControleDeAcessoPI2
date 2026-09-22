@@ -4,7 +4,6 @@ import com.example.controledeacesso.dto.PessoaDTO;
 import com.example.controledeacesso.entity.Pessoa;
 import com.example.controledeacesso.repositories.PessoaRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -18,7 +17,6 @@ public class PessoaService {
     private final PessoaRepository pessoaRepository;
 
     public void cadastroPessoa(PessoaDTO data) throws IOException {
-
         String fotoBase64 = Base64.getEncoder()
                 .encodeToString(data.getFoto().getBytes());
 
@@ -35,13 +33,21 @@ public class PessoaService {
         return pessoaRepository.findById(cpf).orElse(null);
     }
 
-    public void atualizarPessoa(String cpf, String nome, String foto) {
-        Pessoa pessoa = pessoaRepository.findById(cpf).orElse(null);
-        if (pessoa != null) {
-            pessoa.setNome(nome);
-            pessoa.setFoto(foto);
-            pessoaRepository.save(pessoa);
+    public void atualizarPessoa(PessoaDTO data) throws IOException {
+        Pessoa pessoa = pessoaRepository.findById(data.getCpf()).orElse(null);
+        if (pessoa == null) {
+            return;
         }
+
+        pessoa.setNome(data.getNome());
+
+        if (data.getFoto() != null && !data.getFoto().isEmpty()) {
+            String fotoBase64 = Base64.getEncoder()
+                    .encodeToString(data.getFoto().getBytes());
+            pessoa.setFoto(fotoBase64);
+        }
+
+        pessoaRepository.save(pessoa);
     }
 
     public void deletarPessoa(String cpf) {
@@ -50,9 +56,5 @@ public class PessoaService {
 
     public List<Pessoa> listarPessoas() {
         return pessoaRepository.findAll();
-    }
-
-    public Pessoa buscarPessoaPorId(String id) {
-        return pessoaRepository.findById(id).orElse(null);
     }
 }
