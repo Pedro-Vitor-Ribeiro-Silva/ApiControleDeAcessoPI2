@@ -36,8 +36,8 @@ public class PessoaController {
     }
 
     @PutMapping("/atualizar")
-    public ResponseEntity<String> atualizarPessoa(@ModelAttribute PessoaDTO data) {
-        pessoaService.atualizarPessoa(data.getCpf(), data.getNome(), data.getFoto());
+    public ResponseEntity<String> atualizarPessoa(@ModelAttribute PessoaDTO data) throws IOException {
+        pessoaService.atualizarPessoa(data);
         return ResponseEntity.ok("Informações de Acesso atualizado com sucesso!");
     }
 }
