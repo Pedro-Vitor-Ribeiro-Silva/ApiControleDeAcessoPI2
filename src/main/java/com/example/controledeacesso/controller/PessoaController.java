@@ -9,13 +9,25 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.Base64;
+import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/pessoa")
 @RequiredArgsConstructor
 public class PessoaController {
 
     private final PessoaService pessoaService;
+
+    @GetMapping("/listar")
+    public List<Pessoa> listarPessoas() {
+        return pessoaService.listarPessoas();
+    }
+
+    @GetMapping("/{cpf}")
+    public ResponseEntity<Pessoa> buscarPessoa(@PathVariable String cpf) {
+        Pessoa pessoa = pessoaService.buscarPessoaPorCpf(cpf);
+        return pessoa != null ? ResponseEntity.ok(pessoa) : ResponseEntity.notFound().build();
+    }
 
     @PostMapping("/cadastro")
     public ResponseEntity<String> cadastroPessoa(
@@ -27,5 +39,17 @@ public class PessoaController {
         return ResponseEntity.ok(
                 "Acesso de " + data.getNome() + " registrado!"
         );
+    }
+
+    @PutMapping("/atualizar")
+    public ResponseEntity<String> atualizarPessoa(@ModelAttribute PessoaDTO data) throws IOException {
+        pessoaService.atualizarPessoa(data);
+        return ResponseEntity.ok("Informações de Acesso atualizado com sucesso!");
+    }
+
+    @DeleteMapping("/{cpf}")
+    public ResponseEntity<String> deletarPessoa(@PathVariable String cpf) {
+        pessoaService.deletarPessoa(cpf);
+        return ResponseEntity.ok("Acesso deletado com sucesso!");
     }
 }
