@@ -4,7 +4,6 @@ import com.example.controledeacesso.dto.PessoaDTO;
 import com.example.controledeacesso.entity.Pessoa;
 import com.example.controledeacesso.repositories.PessoaRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -18,7 +17,6 @@ public class PessoaService {
     private final PessoaRepository pessoaRepository;
 
     public void cadastroPessoa(PessoaDTO data) throws IOException {
-
         String fotoBase64 = Base64.getEncoder()
                 .encodeToString(data.getFoto().getBytes());
 
@@ -58,9 +56,5 @@ public class PessoaService {
 
     public List<Pessoa> listarPessoas() {
         return pessoaRepository.findAll();
-    }
-
-    public Pessoa buscarPessoaPorId(String id) {
-        return pessoaRepository.findById(id).orElse(null);
     }
 }
